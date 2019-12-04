@@ -1,0 +1,18 @@
+{
+  "name": "@netivo/scripts",
+  "version": "1.0.0",
+  "description": "Scripts for compiling front end works",
+  "bin": {
+    "netivo-scripts": "./cli/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netivo/scripts.git"
+  },
+  "author": "Netivo <biuro@netivo.pl> (http://netivo.pl)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/netivo/scripts/issues"
+  },
+  "homepage": "https://github.com/netivo/scripts#readme"
+}
