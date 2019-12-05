@@ -14,5 +14,9 @@
   "bugs": {
     "url": "https://github.com/netivo/scripts/issues"
   },
-  "homepage": "https://github.com/netivo/scripts#readme"
+  "homepage": "https://github.com/netivo/scripts#readme",
+  "dependencies": {
+    "cross-spawn": "^7.0.1",
+    "path": "^0.12.7"
+  }
 }
