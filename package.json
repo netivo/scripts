@@ -14,9 +14,32 @@
   "bugs": {
     "url": "https://github.com/netivo/scripts/issues"
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
   "homepage": "https://github.com/netivo/scripts#readme",
   "dependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "@babel/register": "^7.7.4",
+    "@wordpress/babel-preset-default": "^4.7.0",
+    "@wordpress/dependency-extraction-webpack-plugin": "^2.1.0",
+    "babel-loader": "^8.0.6",
     "cross-spawn": "^7.0.1",
-    "path": "^0.12.7"
+    "fancy-log": "^1.3.3",
+    "glob": "^7.1.6",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "node-sass-package-importer": "^5.3.2",
+    "path": "^0.12.7",
+    "plugin-error": "^1.0.1",
+    "resolve-bin": "^0.4.0",
+    "source-map-loader": "^0.2.4",
+    "webpack": "^4.41.2"
   }
 }
