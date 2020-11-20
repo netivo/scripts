@@ -7,7 +7,7 @@ const projectName = (typeof process.env.npm_package_name !== 'undefined' &&proce
 const gutenOutput = (typeof process.env.npm_package_gutenberg !== 'undefined' && process.env.npm_package_gutenberg !== '') ? process.env.npm_package_gutenberg : 'Netivo/Theme/Admin/views/gutenberg';
 
 const gutenPath = path.resolve(process.cwd(), 'sources', 'gutenberg');
-const projectPath = path.resolve('/dist', projectName);
+const projectPath = path.join('dist', projectName);
 const gutenBlocksFiles = glob.sync( gutenPath+ '/**/index.js');
 
 let entries = {};
@@ -24,7 +24,7 @@ const gutenBlocks = gutenBlocksFiles.reduce((acc, item) => {
 
 entries = Object.assign(entries, gutenBlocks);
 
-console.log(entries);
+console.log(process.cwd(), entries);
 
 const config =  {
     devtool: 'source-map',
