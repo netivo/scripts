@@ -7,6 +7,7 @@ const path = require('path');
 const glog = require('fancy-log');
 const pluginError = require('plugin-error');
 const webpack = require('webpack');
+const sourcemaps = require("gulp-sourcemaps");
 
 const webpackConfig = require('./webpack.build');
 
@@ -23,6 +24,17 @@ const compileSASS = () => {
         .pipe(minifyCss())
         .pipe(gulp.dest(path.resolve(process.cwd(), 'dist')));
 };
+const developSASS = () => {
+    return gulp.src(path.resolve(process.cwd(), 'sources', 'sass', 'main.scss'))
+        .pipe(sourcemaps.init())
+        .pipe(sassParser({includePaths: [path.resolve(process.cwd(), 'sources', 'sass')], importer: packageImporter()}))
+        .pipe(rename(name + '.css'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(path.resolve(process.cwd(), 'dist')));
+};
+const watchSASS = () => {
+    return gulp.watch([path.resolve(process.cwd(), 'sources', 'sass') + '/**/*.sass', path.resolve(process.cwd(), 'sources', 'sass')+'/**/*.scss'], developSASS)
+};
 
 const webpackRun = (done) => {
     webpack(webpackConfig, (err, stats) => {
@@ -36,6 +48,11 @@ const webpackRun = (done) => {
     });
 };
 
+const watchJS = () => {
+    return gulp.watch([path.resolve(process.cwd(), 'sources', 'javascript') + '/**/*.js', path.resolve(process.cwd(), 'sources', 'gutenberg') + '/**/*.js'], webpackRun)
+}
+
 module.exports = {
-    compile: gulp.parallel(compileSASS, webpackRun)
+    compile: gulp.parallel(compileSASS, webpackRun),
+    develop: gulp.parallel(watchSASS, watchJS)
 };
