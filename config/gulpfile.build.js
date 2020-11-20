@@ -47,9 +47,21 @@ const webpackRun = (done) => {
         done();
     });
 };
+const webpackRunDevelop = (done) => {
+    webpackConfig['mode'] = 'development';
+    webpack(webpackConfig, (err, stats) => {
+        if(err) {
+            throw new pluginError("webpack", err);
+        }
+        else {
+            glog("[webpack]", stats.toString());
+        }
+        done();
+    });
+};
 
 const watchJS = () => {
-    return gulp.watch([path.resolve(process.cwd(), 'sources', 'javascript') + '/**/*.js', path.resolve(process.cwd(), 'sources', 'gutenberg') + '/**/*.js'], webpackRun)
+    return gulp.watch([path.resolve(process.cwd(), 'sources', 'javascript') + '/**/*.js', path.resolve(process.cwd(), 'sources', 'gutenberg') + '/**/*.js'], webpackRunDevelop)
 }
 
 module.exports = {
