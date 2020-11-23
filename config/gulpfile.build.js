@@ -9,6 +9,8 @@ const pluginError = require('plugin-error');
 const webpack = require('webpack');
 const sourcemaps = require("gulp-sourcemaps");
 
+const fonts = require("@netivo/fonts");
+
 const webpackConfig = require('./webpack.build');
 
 let name = process.env.npm_package_name;
@@ -66,5 +68,6 @@ const watchJS = () => {
 
 module.exports = {
     compile: gulp.parallel(compileSASS, webpackRun),
-    develop: gulp.parallel(watchSASS, watchJS)
+    develop: gulp.parallel(watchSASS, watchJS),
+    fonts: fonts.fonts
 };
