@@ -15,8 +15,6 @@ const webpackConfig = require('./webpack.build');
 
 let name = process.env.npm_package_name;
 
-console.log(process.cwd());
-
 const compileSASS = () => {
     return gulp.src(path.resolve(process.cwd(), 'sources', 'sass', 'main.scss'))
         .pipe(sassParser({includePaths: [path.resolve(process.cwd(), 'sources', 'sass')], importer: packageImporter()}))
@@ -35,10 +33,11 @@ const developSASS = () => {
         .pipe(gulp.dest(path.resolve(process.cwd(), 'dist')));
 };
 const watchSASS = () => {
-    return gulp.watch([path.resolve(process.cwd(), 'sources', 'sass') + '/**/*.sass', path.resolve(process.cwd(), 'sources', 'sass')+'/**/*.scss'], developSASS)
+    return gulp.watch([path.resolve(process.cwd(), 'sources', 'sass', '**', '*.sass').replace(/\\/g, '/'), path.resolve(process.cwd(), 'sources', 'sass', '**', '*.scss').replace(/\\/g, '/')], developSASS)
 };
 
 const webpackRun = (done) => {
+    webpackConfig['mode'] = 'production';
     webpack(webpackConfig, (err, stats) => {
         if(err) {
             throw new pluginError("webpack", err);
@@ -63,7 +62,7 @@ const webpackRunDevelop = (done) => {
 };
 
 const watchJS = () => {
-    return gulp.watch([path.resolve(process.cwd(), 'sources', 'javascript') + '/**/*.js', path.resolve(process.cwd(), 'sources', 'gutenberg') + '/**/*.js'], webpackRunDevelop)
+    return gulp.watch([path.resolve(process.cwd(), 'sources', 'javascript', '**', '*.js').replace(/\\/g, '/'), path.resolve(process.cwd(), 'sources', 'gutenberg', '**', '*.js').replace(/\\/g, '/')], webpackRunDevelop)
 }
 
 module.exports = {
