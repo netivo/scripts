@@ -9,7 +9,7 @@ const { status } = spawn(
         path.join( path.dirname( __dirname ), 'config', `gulpfile.build.js` ),
         '--cwd',
         process.cwd(),
-        'develop'
+        'fonts'
     ],
     { stdio: 'inherit' }
 );

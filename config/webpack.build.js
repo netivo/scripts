@@ -4,10 +4,10 @@ const path = require('path');
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 
 const projectName = (typeof process.env.npm_package_name !== 'undefined' &&process.env.npm_package_name !== '') ? process.env.npm_package_name : 'name';
-const gutenOutput = (typeof process.env.npm_package_gutenberg !== 'undefined' && process.env.npm_package_gutenberg !== '') ? process.env.npm_package_gutenberg : 'Netivo/Theme/Admin/views/gutenberg';
+const gutenOutput = (typeof process.env.npm_package_gutenberg !== 'undefined' && process.env.npm_package_gutenberg !== '') ? process.env.npm_package_gutenberg : path.join('Netivo','Theme','Admin','views','gutenberg');
 
 const gutenPath = path.resolve(process.cwd(), 'sources', 'gutenberg');
-const projectPath = path.resolve('/dist', projectName);
+const projectPath = path.join('dist', projectName);
 const gutenBlocksFiles = glob.sync( gutenPath+ '/**/index.js');
 
 let entries = {};
@@ -15,16 +15,15 @@ entries[projectPath] = path.resolve( process.cwd(), 'sources', 'javascript', 'in
 
 
 const gutenBlocks = gutenBlocksFiles.reduce((acc, item) => {
-    const blockName = item.replace('/index.js', '').replace(gutenPath+'/', '');
-    const name = path.resolve('/', gutenOutput, blockName, 'block');
+    item = path.resolve(item);
+    const blockName = item.replace(path.sep + 'index.js', '').replace(gutenPath+path.sep, '');
+    const name = path.join(gutenOutput, blockName, 'block');
     acc[name] = item;
     return acc;
 }, {});
 
 
 entries = Object.assign(entries, gutenBlocks);
-
-console.log(entries);
 
 const config =  {
     devtool: 'source-map',

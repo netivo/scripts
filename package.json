@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Scripts for compiling front end works",
   "bin": {
-    "netivo-scripts": "./cli/index.js"
+    "netivo-scripts": "cli/index.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "@babel/register": "^7.7.4",
+    "@netivo/fonts": "^0.1.2",
     "@wordpress/babel-preset-default": "^4.7.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^2.1.0",
     "babel-loader": "^8.0.6",
@@ -35,12 +36,12 @@
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^2.6.5",
+    "lodash.template": ">=4.5.0",
     "node-sass-package-importer": "^5.3.2",
     "path": "^0.12.7",
     "plugin-error": "^1.0.1",
     "resolve-bin": "^0.4.0",
     "source-map-loader": "^0.2.4",
-    "webpack": "^4.41.2",
-    "lodash.template": ">=4.5.0"
+    "webpack": "^4.41.2"
   }
 }
