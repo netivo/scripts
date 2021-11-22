@@ -1,5 +1,5 @@
 const gulp = require("gulp");
-const sassParser = require("gulp-sass");
+const sassParser = require("gulp-sass")(require('node-sass'));
 const rename = require("gulp-rename");
 const minifyCss = require("gulp-clean-css");
 const packageImporter = require("node-sass-package-importer");
