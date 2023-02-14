@@ -1,8 +1,7 @@
 const gulp = require("gulp");
-const sassParser = require("gulp-sass")(require('node-sass'));
+const sassParser = require("gulp-sass")(require('sass'));
 const rename = require("gulp-rename");
 const minifyCss = require("gulp-clean-css");
-const packageImporter = require("node-sass-package-importer");
 const path = require('path');
 const glog = require('fancy-log');
 const pluginError = require('plugin-error');
@@ -17,7 +16,7 @@ let name = process.env.npm_package_name;
 
 const compileSASS = () => {
     return gulp.src(path.resolve(process.cwd(), 'sources', 'sass', 'main.scss'))
-        .pipe(sassParser({includePaths: [path.resolve(process.cwd(), 'sources', 'sass')], importer: packageImporter()}))
+        .pipe(sassParser({includePaths: [path.resolve(process.cwd(), 'sources', 'sass'), path.resolve(process.cwd(), 'node_modules')]}))
         .pipe(rename(name + '.css'))
         .pipe(gulp.dest(path.resolve(process.cwd(), 'dist')))
         .pipe(rename(name + '.min.css'))
@@ -27,7 +26,7 @@ const compileSASS = () => {
 const developSASS = () => {
     return gulp.src(path.resolve(process.cwd(), 'sources', 'sass', 'main.scss'))
         .pipe(sourcemaps.init())
-        .pipe(sassParser({includePaths: [path.resolve(process.cwd(), 'sources', 'sass')], importer: packageImporter()}))
+        .pipe(sassParser({includePaths: [path.resolve(process.cwd(), 'sources', 'sass'), path.resolve(process.cwd(), 'node_modules')]}))
         .pipe(rename(name + '.css'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.resolve(process.cwd(), 'dist')));
