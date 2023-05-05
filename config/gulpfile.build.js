@@ -17,21 +17,48 @@ const webpackConfig = require('./webpack.build');
 let name = process.env.npm_package_name;
 
 const compileSASS = () => {
-    return gulp.src(path.resolve(process.cwd(), 'sources', 'sass', 'main.scss'))
+    return gulp.src(path.resolve(process.cwd(), 'sources', 'sass', 'entries', '**.scss'))
         .pipe(sassParser({includePaths: [path.resolve(process.cwd(), 'sources', 'sass'), path.resolve(process.cwd(), 'node_modules')]}))
         .pipe(postCss([autoprefixer]))
-        .pipe(rename(name + '.css'))
+        .pipe(rename(function(path) {
+            let basename = path.basename;
+            if (basename === 'main' || basename === 'index') basename = '';
+            else basename = '-' + basename;
+            return {
+                dirname: path.dirname,
+                basename: name + basename,
+                extname: ".css"
+            }
+        }))
         .pipe(gulp.dest(path.resolve(process.cwd(), 'dist')))
-        .pipe(rename(name + '.min.css'))
+        .pipe(rename(function(path) {
+            let basename = path.basename;
+            if (basename === 'main' || basename === 'index') basename = '';
+            else basename = '-' + basename;
+            return {
+                dirname: path.dirname,
+                basename: name + basename,
+                extname: ".min.css"
+            }
+        }))
         .pipe(minifyCss())
         .pipe(gulp.dest(path.resolve(process.cwd(), 'dist')));
 };
 const developSASS = () => {
-    return gulp.src(path.resolve(process.cwd(), 'sources', 'sass', 'main.scss'))
+    return gulp.src(path.resolve(process.cwd(), 'sources', 'sass', 'entries', '**.scss'))
         .pipe(sourcemaps.init())
         .pipe(sassParser({includePaths: [path.resolve(process.cwd(), 'sources', 'sass'), path.resolve(process.cwd(), 'node_modules')]}))
         .pipe(postCss([autoprefixer]))
-        .pipe(rename(name + '.css'))
+        .pipe(rename(function(path){
+            let basename = path.basename;
+            if(basename === 'main' || basename === 'index') basename = '';
+            else basename = '-' + basename;
+            return {
+                dirname: path.dirname,
+                basename: name + basename,
+                extname: ".css"
+            }
+        }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.resolve(process.cwd(), 'dist')));
 };
