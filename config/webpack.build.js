@@ -17,13 +17,13 @@ let entries = {};
 const projectParts = projectFiles.reduce((acc, item) => {
     item = path.resolve(item);
     let partName = path.basename(item);
-    if(partName === 'main' || partName === 'index') partName = '';
+    if(partName === 'main.js' || partName === 'index.js') partName = '.js';
     else partName = '-'+partName;
-    const name = path.join('dist', partName+'.js');
+    const name = path.join('dist', projectName+partName);
     acc[name] = item;
 }, {});
 
-entries = Object.assign(entries, gutenBlocks);
+entries = Object.assign(entries, projectParts);
 
 //entries[projectPath] = path.resolve( process.cwd(), 'sources', 'javascript', 'index.js' );
 
