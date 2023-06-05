@@ -17,10 +17,11 @@ let entries = {};
 const projectParts = projectFiles.reduce((acc, item) => {
     item = path.resolve(item);
     let partName = path.basename(item);
-    if(partName === 'main.js' || partName === 'index.js') partName = '.js';
+    if(partName === 'main.js' || partName === 'index.js') partName = '';
     else partName = '-'+partName;
     const name = path.join('dist', projectName+partName);
     acc[name] = item;
+    return acc;
 }, {});
 
 entries = Object.assign(entries, projectParts);

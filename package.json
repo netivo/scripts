@@ -24,7 +24,6 @@
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "@babel/register": "^7.7.4",
-    "@netivo/fonts": "^0.1.2",
     "@wordpress/babel-preset-default": "^7.1.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^4.9.0",
     "autoprefixer": "^10.2.5",
