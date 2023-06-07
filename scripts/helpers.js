@@ -1,6 +1,5 @@
-import Path from "path";
-import path from "path";
-import glob from "glob";
+const Path = require("path");
+const glob = require("glob");
 
 const projectName = (typeof process.env.npm_package_name !== 'undefined' &&process.env.npm_package_name !== '') ? process.env.npm_package_name : 'name';
 
@@ -17,7 +16,7 @@ const parsePath = (path) => {
 }
 
 const getSassFiles = () => {
-    const sassPath = path.resolve(process.cwd(), 'sources', 'sass', 'entries', '**.scss')
+    const sassPath = Path.resolve(process.cwd(), 'sources', 'sass', 'entries', '**.scss')
     return glob.sync(sassPath);
 }
 

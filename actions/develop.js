@@ -39,7 +39,7 @@ const developJs = () => {
 glog('Watchig scss ...');
 glog('Watchig js ...');
 
-const watcher = watch([path.resolve(process.cwd(), 'sources', 'sass', '**', '*.*').replace(/\\/g, '/')]);
+const watcher = watch([path.resolve(process.cwd(), 'sources', '**', '*.*').replace(/\\/g, '/')]);
 
 const fileChange = (file, stat) => {
         glog('Change detected: ' + file);
