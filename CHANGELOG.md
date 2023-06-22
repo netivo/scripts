@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.3.1
+- Fix for windows paths in glob.sync
+
 ## Version 1.3
 - Getting rid of Gulp and process files with dart-sass and postcss
 

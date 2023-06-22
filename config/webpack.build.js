@@ -7,10 +7,10 @@ const projectName = (typeof process.env.npm_package_name !== 'undefined' &&proce
 const gutenOutput = (typeof process.env.npm_package_gutenberg !== 'undefined' && process.env.npm_package_gutenberg !== '') ? process.env.npm_package_gutenberg : path.join('Netivo','Theme','Admin','views','gutenberg');
 
 const projectPath = path.resolve(process.cwd(), 'sources', 'javascript');
-const projectFiles = glob.sync(projectPath+'/entries/**.js');
+const projectFiles = glob.sync((projectPath+'/entries/**.js').replace(/\\/g,'/'));
 
 const gutenPath = path.resolve(process.cwd(), 'sources', 'gutenberg');
-const gutenBlocksFiles = glob.sync( gutenPath+ '/**/index.js');
+const gutenBlocksFiles = glob.sync( (gutenPath+ '/**/index.js').replace(/\\/g,'/'));
 
 let entries = {};
 

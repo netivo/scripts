@@ -17,7 +17,7 @@ const parsePath = (path) => {
 
 const getSassFiles = () => {
     const sassPath = Path.resolve(process.cwd(), 'sources', 'sass', 'entries', '**.scss')
-    return glob.sync(sassPath);
+    return glob.sync(sassPath.replace(/\\/g,'/'));
 }
 
 const getCssFileNames = (file) => {
