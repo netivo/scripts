@@ -21,6 +21,9 @@ const createMap = (mapData, mapFile, cssFile = null) => {
 
 const compileCss = (source, destination) => {
     return new Promise((resolve, reject) => {
+        if(!fs.existsSync(path.resolve(process.cwd(), 'dist'))){
+            fs.mkdirSync(path.resolve(process.cwd(), 'dist'));
+        }
         const sassResult = sass.compile(source, {
             style: 'expanded',
             loadPaths: [path.resolve(process.cwd(), 'sources', 'sass'), path.resolve(process.cwd(), 'node_modules')],
@@ -36,6 +39,9 @@ const compileCss = (source, destination) => {
 
 const minimizeCss = (css, destination) => {
     return new Promise((resolve, reject) => {
+        if(!fs.existsSync(path.resolve(process.cwd(), 'dist'))){
+            fs.mkdirSync(path.resolve(process.cwd(), 'dist'));
+        }
         postcss([cssnano({preset: 'default'})]).process(css).then(r => {
             fs.writeFileSync(path.resolve(process.cwd(), 'dist', destination), r.css, {flag: 'w'});
             resolve({file: destination});

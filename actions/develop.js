@@ -24,6 +24,8 @@ const developCSS = () => {
 
                                 glog('Finished in ' + rounded + 's.');
                         });
+                }).catch(error => {
+                        glog.error(error.toString());
                 });
         });
 }

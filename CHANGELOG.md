@@ -1,5 +1,9 @@
 # Netivo Scripts Changelog
 
+## Version 1.3.2
+- Fix for creating dist directory
+- Fix for continuing after sass compiler error
+
 ## Version 1.3.1
 - Fix for windows paths in glob.sync
 
