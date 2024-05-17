@@ -4,7 +4,10 @@ const path = require('path');
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 
 const projectName = (typeof process.env.npm_package_name !== 'undefined' &&process.env.npm_package_name !== '') ? process.env.npm_package_name : 'name';
-const gutenOutput = (typeof process.env.npm_package_gutenberg !== 'undefined' && process.env.npm_package_gutenberg !== '') ? process.env.npm_package_gutenberg : path.join('Netivo','Theme','Admin','views','gutenberg');
+
+let packageData = (typeof process.env.npm_package_json !== 'undefined' && process.env.npm_package_json !== '') ? require(process.env.npm_package_json) : {};
+
+const gutenOutput = (typeof packageData.gutenberg !== 'undefined' && packageData.gutenberg !== '') ? packageData.gutenberg : path.join('dist','admin','gutenberg');
 
 const projectPath = path.resolve(process.cwd(), 'sources', 'javascript');
 const projectFiles = glob.sync((projectPath+'/entries/**.js').replace(/\\/g,'/'));

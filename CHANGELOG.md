@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.3.3
+- Fix for Gutenberg destination folder
+
 ## Version 1.3.2
 - Fix for creating dist directory
 - Fix for continuing after sass compiler error
