@@ -9,6 +9,8 @@ let packageData = (typeof process.env.npm_package_json !== 'undefined' && proces
 
 const gutenOutput = (typeof packageData.gutenberg !== 'undefined' && packageData.gutenberg !== '') ? packageData.gutenberg : path.join('dist','admin','gutenberg');
 
+const scriptExternals = (typeof packageData.external_scripts !== 'undefined') ? packageData.external_scripts : {};
+
 const projectPath = path.resolve(process.cwd(), 'sources', 'javascript');
 const projectFiles = glob.sync((projectPath+'/entries/**.js').replace(/\\/g,'/'));
 
@@ -20,7 +22,7 @@ let entries = {};
 const projectParts = projectFiles.reduce((acc, item) => {
     item = path.resolve(item);
     let partName = path.basename(item);
-    if(partName === 'main.js' || partName === 'index.js') partName = '';
+    if(partName === 'main.js' || partName === 'index.js') partName = '.js';
     else partName = '-'+partName;
     const name = path.join('dist', projectName+partName);
     acc[name] = item;
@@ -35,7 +37,7 @@ entries = Object.assign(entries, projectParts);
 const gutenBlocks = gutenBlocksFiles.reduce((acc, item) => {
     item = path.resolve(item);
     const blockName = item.replace(path.sep + 'index.js', '').replace(gutenPath+path.sep, '');
-    const name = path.join(gutenOutput, blockName, 'block');
+    const name = path.join(gutenOutput, blockName, 'block.js');
     acc[name] = item;
     return acc;
 }, {});
@@ -47,7 +49,7 @@ const config =  {
     devtool: 'source-map',
     entry: entries,
     output: {
-        filename: '[name].js',
+        filename: '[name]',
         path: path.resolve(process.cwd())
     },
     module: {
