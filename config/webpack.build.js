@@ -52,6 +52,7 @@ const config =  {
         filename: '[name]',
         path: path.resolve(process.cwd())
     },
+    externals: scriptExternals,
     module: {
         rules: [
             {
