@@ -1,7 +1,8 @@
-const webpackConfig = require("../config/webpack.build");
+
 const webpack = require("webpack");
 const develop = () => {
     return new Promise((resolve, reject) => {
+        const webpackConfig = require("../config/webpack.build");
         webpackConfig['mode'] = 'development';
         webpack(webpackConfig, (err, stats) => {
             if(err) {
@@ -16,6 +17,7 @@ const develop = () => {
 
 const compile = () => {
     return new Promise((resolve, reject) => {
+        const webpackConfig = require("../config/webpack.build");
         webpackConfig['mode'] = 'production';
         webpack(webpackConfig, (err, stats) => {
             if(err) {

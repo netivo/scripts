@@ -5,6 +5,7 @@ const watch = require('glob-watcher');
 const helpers = require('./../scripts/helpers');
 const css = require('./../scripts/css');
 const javascript = require('./../scripts/javascript');
+const gutenberg = require('../scripts/gutenberg');
 
 
 const developCSS = () => {
@@ -13,11 +14,11 @@ const developCSS = () => {
                 const resultFiles = helpers.getCssFileNames(file);
                 const start = performance.now();
                 glog('SASS compiling entry: ' + resultFiles.entryName);
-                css.compileCss(file, resultFiles.cssFile).then(result => {
+                css.compileCss(file, resultFiles.cssFile, 'front').then(result => {
                         result.warnings.forEach(warning => {
                                 glog.warn(warning.toString());
                         });
-                        css.createMap(result.sourceMap, resultFiles.mapFile, resultFiles.cssFile).then(mapResult => {
+                        css.createMap(result.sourceMap, resultFiles.mapFile, 'front', resultFiles.cssFile).then(mapResult => {
                                 const stop = performance.now();
                                 const inSeconds = (stop - start) / 1000;
                                 const rounded = Number(inSeconds).toFixed(3);
@@ -43,13 +44,52 @@ glog('Watchig js ...');
 
 const watcher = watch([path.resolve(process.cwd(), 'sources', '**', '*.*').replace(/\\/g, '/')]);
 
+const developGutenberg = (file) => {
+        let type = helpers.getBlockFileType(file);
+        let blockName = helpers.getBlockNameFromFile(file);
+        if(type === 'block') {
+                gutenberg.developBlock(file).then(result => {
+                        glog(result.toString())
+                }).catch(error => {
+                        glog.error(error.toString());
+                });
+        } else if( type === 'block-style') {
+                glog('Compiling block ' + blockName + ' editor style');
+                gutenberg.developBlockCss(file).then(result => {
+                        glog('Finished in ' + result + 's.');
+                }).catch(error => {
+                        glog.error(error.toString());
+                });
+        } else if( type === 'front-script') {
+                gutenberg.developBlockFrontScript(file).then(result => {
+                        glog(result.toString())
+                }).catch(error => {
+                        glog.error(error.toString());
+                });
+        } else if( type === 'front-style') {
+                glog('Compiling block ' + blockName + ' view style');
+                gutenberg.developBlockFrontStyle(file).then(result => {
+                        glog('Finished in ' + result + 's.');
+                }).catch(error => {
+                        glog.error(error.toString());
+                });
+        } else if( type === 'php') {
+                gutenberg.movePhpFile(file);
+        } else if( type === 'json') {
+                gutenberg.prepareJsonFile(file);
+        }
+}
+
 const fileChange = (file, stat) => {
         glog('Change detected: ' + file);
         const sassPath = path.resolve(process.cwd(), 'sources', 'sass');
         const jsPath = path.resolve(process.cwd(), 'sources', 'javascript');
         const gutenPath = path.resolve(process.cwd(), 'sources', 'gutenberg');
         if(file.startsWith(sassPath)) developCSS();
-        else if(file.startsWith(jsPath) || file.startsWith(gutenPath)) developJs();
+        else if(file.startsWith(jsPath)) developJs();
+        else if(file.startsWith(gutenPath)){
+                developGutenberg(file);
+        }
 }
 
 watcher.on('change', fileChange);

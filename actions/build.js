@@ -3,6 +3,7 @@ const glog = require('fancy-log');
 const helpers = require('./../scripts/helpers');
 const css = require('./../scripts/css');
 const javascript = require('./../scripts/javascript');
+const gutenberg = require('./../scripts/gutenberg');
 
 
 const compileCSS = () => {
@@ -27,6 +28,10 @@ const compileCSS = () => {
                 });
         });
 }
+
+const compileGutenberg = () => {
+        gutenberg.compileBlocks();
+}
 const compileJs = () => {
         glog('Javascript compiling');
         javascript.compile().then(result => {
@@ -38,3 +43,4 @@ const compileJs = () => {
 
 compileCSS();
 compileJs();
+compileGutenberg();

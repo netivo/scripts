@@ -1,5 +1,9 @@
 # Netivo Scripts Changelog
 
+## Version 1.4.0
+- Changed way of developing gutenberg blocks
+- Fix for javascript development, new entries don't need now to restart the job
+
 ## Version 1.3.3
 - Fix for Gutenberg destination folder
 

@@ -7,7 +7,7 @@ const projectName = (typeof process.env.npm_package_name !== 'undefined' &&proce
 
 let packageData = (typeof process.env.npm_package_json !== 'undefined' && process.env.npm_package_json !== '') ? require(process.env.npm_package_json) : {};
 
-const gutenOutput = (typeof packageData.gutenberg !== 'undefined' && packageData.gutenberg !== '') ? packageData.gutenberg : path.join('dist','admin','gutenberg');
+const gutenOutput = (typeof packageData.gutenberg !== 'undefined' && packageData.gutenberg !== '') ? packageData.gutenberg : path.join('dist','gutenberg');
 
 const scriptExternals = (typeof packageData.external_scripts !== 'undefined') ? packageData.external_scripts : {};
 
@@ -15,7 +15,9 @@ const projectPath = path.resolve(process.cwd(), 'sources', 'javascript');
 const projectFiles = glob.sync((projectPath+'/entries/**.js').replace(/\\/g,'/'));
 
 const gutenPath = path.resolve(process.cwd(), 'sources', 'gutenberg');
-const gutenBlocksFiles = glob.sync( (gutenPath+ '/**/index.js').replace(/\\/g,'/'));
+const gutenBlocksFiles = glob.sync( (gutenPath+ '/**/admin/index.js').replace(/\\/g,'/'));
+const gutenJSFiles = glob.sync( (gutenPath+ '/**/front/script/index.js').replace(/\\/g,'/'));
+
 
 let entries = {};
 
@@ -36,14 +38,22 @@ entries = Object.assign(entries, projectParts);
 
 const gutenBlocks = gutenBlocksFiles.reduce((acc, item) => {
     item = path.resolve(item);
-    const blockName = item.replace(path.sep + 'index.js', '').replace(gutenPath+path.sep, '');
+    const blockName = item.replace(path.sep + 'admin'+ path.sep +'index.js', '').replace(gutenPath+path.sep, '');
     const name = path.join(gutenOutput, blockName, 'block.js');
     acc[name] = item;
     return acc;
 }, {});
 
+const gutenJS = gutenJSFiles.reduce((acc, item) => {
+    item = path.resolve(item);
+    const blockName = item.replace(path.sep + 'front' + path.sep + 'script' + path.sep + 'index.js', '').replace(gutenPath+path.sep, '');
+    const name = path.join(gutenOutput, blockName, blockName + '.js');
+    acc[name] = item;
+    return acc;
+}, {});
 
-entries = Object.assign(entries, gutenBlocks);
+
+entries = Object.assign(entries, gutenBlocks, gutenJS);
 
 const config =  {
     devtool: 'source-map',
