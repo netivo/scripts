@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.4.2 
+- Removed Gutenberg from front javascript compilation
+
 ## Version 1.4.1
 - Fixed error when no css files were included in block
 
