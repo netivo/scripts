@@ -21,7 +21,7 @@ const getResultPath = (file, type, blockName = null) => {
     }
 }
 
-const createMap = (mapData, mapFile, type, cssFile = null, blockName = null) => {
+const createMap = (mapData, mapFile, cssFile = null, type = 'front', blockName = null) => {
     return new Promise((resolve, reject) => {
         let map = convert.fromObject(mapData);
         if(cssFile !== null) map.setProperty('file', cssFile);
@@ -34,7 +34,7 @@ const createMap = (mapData, mapFile, type, cssFile = null, blockName = null) => 
     });
 }
 
-const compileCss = (source, destination, type, blockName = null) => {
+const compileCss = (source, destination, type = 'front', blockName = null) => {
     return new Promise((resolve, reject) => {
         if (!fs.existsSync(path.resolve(process.cwd(), 'dist'))) {
             fs.mkdirSync(path.resolve(process.cwd(), 'dist'));
@@ -52,7 +52,7 @@ const compileCss = (source, destination, type, blockName = null) => {
     });
 }
 
-const minimizeCss = (css, destination, type, blockName = null) => {
+const minimizeCss = (css, destination, type = 'front', blockName = null) => {
     return new Promise((resolve, reject) => {
         if(!fs.existsSync(path.resolve(process.cwd(), 'dist'))){
             fs.mkdirSync(path.resolve(process.cwd(), 'dist'));

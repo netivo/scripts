@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.4.1
+- Fixed error when no css files were included in block
+
 ## Version 1.4.0
 - Changed way of developing gutenberg blocks
 - Fix for javascript development, new entries don't need now to restart the job

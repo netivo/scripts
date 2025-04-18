@@ -30,7 +30,7 @@ const compileCss = (entry, resultFiles, blockName, mode) => {
             result.warnings.forEach(warning => {
                 glog.warn(warning.toString());
             });
-            css.createMap(result.sourceMap, resultFiles.mapFile, 'block', resultFiles.cssFile, blockName).then(mapResult => {
+            css.createMap(result.sourceMap, resultFiles.mapFile, resultFiles.cssFile, 'block', blockName).then(mapResult => {
                 if (mode === 'development') {
                     const stop = performance.now();
                     const inSeconds = (stop - start) / 1000;

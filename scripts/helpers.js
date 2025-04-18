@@ -1,6 +1,7 @@
 const Path = require("path");
 const glob = require("glob");
 const path = require("path");
+const fs = require("node:fs");
 
 const projectName = (typeof process.env.npm_package_name !== 'undefined' &&process.env.npm_package_name !== '') ? process.env.npm_package_name : 'name';
 
@@ -97,6 +98,8 @@ const parseGutenbergBlockEntry = (file) => {
 
     const name = path.join(outputPath, blockName, 'block.js');
     const startFile = path.join(sourcePath, blockName, 'admin', 'index.js');
+
+    if( ! fs.existsSync(startFile)) return false;
     let entry = {}
     entry[name] = startFile
     return entry;
@@ -110,6 +113,9 @@ const parseGutenbergBlockFrontEntry = (file) => {
 
     const name = path.join(outputPath, blockName, blockName + '.js');
     const startFile = path.join(sourcePath, blockName, 'front', 'script', 'index.js');
+
+    if( ! fs.existsSync(startFile)) return false;
+
     let entry = {}
     entry[name] = startFile
     return entry;
@@ -120,14 +126,18 @@ const parseGutenbergBlockFrontStyleEntry = (file) => {
     const blockName = getBlockNameFromFile(file);
 
     if(blockName === false) return false;
-    return path.join(sourcePath, blockName, 'front', 'style', 'index.scss');
+    let startFile = path.join(sourcePath, blockName, 'front', 'style', 'index.scss');
+    if( ! fs.existsSync(startFile)) return false;
+    return startFile;
 }
 const parseGutenbergBlockStyleEntry = (file) => {
     const sourcePath = Path.resolve(process.cwd(), 'sources', 'gutenberg');
     const blockName = getBlockNameFromFile(file);
 
     if(blockName === false) return false;
-    return path.join(sourcePath, blockName, 'admin', 'index.scss');
+    let startFile = path.join(sourcePath, blockName, 'admin', 'index.scss');
+    if( ! fs.existsSync(startFile)) return false;
+    return startFile;
 }
 
 const getGutenbergEntries = () => {

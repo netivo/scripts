@@ -1,6 +1,6 @@
 {
   "name": "@netivo/scripts",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Scripts for compiling front end works",
   "bin": {
     "netivo-scripts": "cli/index.js"
