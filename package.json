@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/netivo/scripts#readme",
   "dependencies": {
-    "cross-spawn": "^7.0.3",
+    "cross-spawn": "^7.0.6",
     "fancy-log": "^2.0.0",
     "path": "^0.12.7",
     "plugin-error": "^2.0.1",
