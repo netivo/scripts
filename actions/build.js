@@ -41,6 +41,22 @@ const compileJs = () => {
         });
 }
 
-compileCSS();
-compileJs();
-compileGutenberg();
+const [actionName, ...args] = process.argv.slice( 2 );
+
+if(actionName !== undefined && args.length > 0) {
+        if(actionName === 'css') {
+                compileCSS();
+        } else if(actionName === 'js') {
+                compileJs();
+        } else if(actionName === 'block') {
+                gutenberg.compileBlock(args[0]);
+        } else {
+                compileCSS();
+                compileJs();
+                compileGutenberg();
+        }
+} else {
+        compileCSS();
+        compileJs();
+        compileGutenberg();
+}

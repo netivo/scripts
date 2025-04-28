@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.4.3
+- Added possibility to build js,css, or blocks separately
+
 ## Version 1.4.2 
 - Removed Gutenberg from front javascript compilation
 
