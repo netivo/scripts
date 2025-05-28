@@ -18,7 +18,7 @@ const developCSS = () => {
                         result.warnings.forEach(warning => {
                                 glog.warn(warning.toString());
                         });
-                        css.createMap(result.sourceMap, resultFiles.mapFile, 'front', resultFiles.cssFile).then(mapResult => {
+                        css.createMap(result.sourceMap, resultFiles.mapFile, resultFiles.cssFile).then(mapResult => {
                                 const stop = performance.now();
                                 const inSeconds = (stop - start) / 1000;
                                 const rounded = Number(inSeconds).toFixed(3);

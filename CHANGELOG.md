@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.4.4
+- Fixed css map creation problem in develop
+
 ## Version 1.4.3
 - Added possibility to build js,css, or blocks separately
 
