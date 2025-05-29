@@ -6,29 +6,39 @@ const helpers = require('./../scripts/helpers');
 const css = require('./../scripts/css');
 const javascript = require('./../scripts/javascript');
 const gutenberg = require('../scripts/gutenberg');
+const lint = require('../scripts/lint.mjs');
 
+let actionRunning = false;
 
 const developCSS = () => {
-        const sassFiles = helpers.getSassFiles();
-        sassFiles.forEach(file => {
-                const resultFiles = helpers.getCssFileNames(file);
-                const start = performance.now();
-                glog('SASS compiling entry: ' + resultFiles.entryName);
-                css.compileCss(file, resultFiles.cssFile, 'front').then(result => {
-                        result.warnings.forEach(warning => {
-                                glog.warn(warning.toString());
-                        });
-                        css.createMap(result.sourceMap, resultFiles.mapFile, resultFiles.cssFile).then(mapResult => {
-                                const stop = performance.now();
-                                const inSeconds = (stop - start) / 1000;
-                                const rounded = Number(inSeconds).toFixed(3);
+        if(actionRunning === false) {
+                actionRunning = true;
+                lint.default.lintCssFix().then(result => {
+                        console.log(result.report);
+                        const sassFiles = helpers.getSassFiles();
+                        sassFiles.forEach(file => {
+                                const resultFiles = helpers.getCssFileNames(file);
+                                const start = performance.now();
+                                glog('SASS compiling entry: ' + resultFiles.entryName);
+                                css.compileCss(file, resultFiles.cssFile, 'front').then(result => {
+                                        result.warnings.forEach(warning => {
+                                                glog.warn(warning.toString());
+                                        });
+                                        css.createMap(result.sourceMap, resultFiles.mapFile, resultFiles.cssFile).then(mapResult => {
+                                                const stop = performance.now();
+                                                const inSeconds = (stop - start) / 1000;
+                                                const rounded = Number(inSeconds).toFixed(3);
 
-                                glog('Finished in ' + rounded + 's.');
+                                                glog('Finished in ' + rounded + 's.');
+                                                actionRunning = false;
+                                        });
+                                }).catch(error => {
+                                        glog.error(error.toString());
+                                        actionRunning = false;
+                                });
                         });
-                }).catch(error => {
-                        glog.error(error.toString());
                 });
-        });
+        }
 }
 const developJs = () => {
         glog('Javascript compiling');
