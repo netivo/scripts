@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.5.0
+- Added linter for scss files, as action and during develop
+
 ## Version 1.4.4
 - Fixed css map creation problem in develop
 

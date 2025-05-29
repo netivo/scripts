@@ -21,7 +21,8 @@ You have to also add the scripts to develop and build, you do it by inserting th
 ```json
 "scripts": {
     "develop": "netivo-scripts develop",
-    "build": "netivo-scripts build"
+    "build": "netivo-scripts build",
+    "lint": "netivo-scripts lint"
 }
 ```
 
@@ -41,7 +42,8 @@ Your final file may look like:
   "main": "./sources/js/index.js",
   "scripts": {
     "develop": "netivo-scripts develop",
-    "build": "netivo-scripts build"
+    "build": "netivo-scripts build",
+    "lint": "netivo-scripts lint"
   },
   "gutenberg": "Netivo/Project/Theme/Admin/views/gutenberg",
   "author": "Netivo <biuro@netivo.pl> (http://netivo.pl)",
@@ -87,3 +89,5 @@ To run your project you just run commands:
 ```npm run develop``` - to start developing with watcher
 
 ```npm run build``` - to build project
+
+```npm run lint action``` - to lint project files
