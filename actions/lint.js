@@ -11,6 +11,17 @@ const lintCssFix = () => {
         console.log(result.report);
     })
 }
+const lintJs = () => {
+    lint.lintJs().then(result => {
+        console.log(result);
+    })
+};
+
+const lintJsFix = () => {
+    lint.lintJsFix().then(result => {
+        console.log(result);
+    })
+}
 
 const [actionName, ...args] = process.argv.slice( 2 );
 
@@ -19,7 +30,12 @@ if(actionName !== undefined) {
         lintCss();
     } else if(actionName === 'css-fix') {
         lintCssFix();
+    } else if(actionName === 'js') {
+        lintJs();
+    } else if(actionName === 'js-fix') {
+        lintJsFix();
     }
 } else {
     lintCss();
+    lintJs();
 }
