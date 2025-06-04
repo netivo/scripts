@@ -212,5 +212,6 @@ module.exports = {
     developBlockFrontStyle: developBlockFrontStyle,
     movePhpFile: movePhpFile,
     prepareJsonFile: prepareJsonFile,
-    compileBlocks: compileBlocks
+    compileBlocks: compileBlocks,
+    compileBlock: compileBlock,
 };
