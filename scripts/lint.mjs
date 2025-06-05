@@ -4,6 +4,7 @@ import {ESLint} from "eslint";
 import wpPlugin from "@wordpress/eslint-plugin";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import prettierPlugin from "eslint-plugin-prettier";
+import * as prettier from "prettier";
 
 const lintCss = () => {
     return new Promise((resolve, reject) => {
@@ -63,12 +64,14 @@ const lintJs = () => {
         }
         let linter = new ESLint({
             overrideConfigFile: true,
-            config
+            overrideConfig: config
         });
 
         linter.lintFiles([path.resolve(process.cwd(), 'sources', '**/*.js')]).then(result => {
-            console.log(result);
-            resolve(result);
+            linter.loadFormatter("stylish").then(res => {
+                let results = res.format(result);
+                resolve(results);
+            });
         }).catch(error => {
             reject(error);
         })
@@ -91,13 +94,18 @@ const lintJsFix = () => {
         }
         let linter = new ESLint({
             overrideConfigFile: true,
-            config,
+            overrideConfig: config,
             fix: true
         });
 
         linter.lintFiles([path.resolve(process.cwd(), 'sources', '**/*.js')]).then(result => {
-            console.log(result);
-            resolve(result);
+            linter.loadFormatter("stylish").then(res => {
+                let results = res.format(result);
+                ESLint.outputFixes(result).then(r => {
+                    resolve(results);
+                })
+            });
+
         }).catch(error => {
             reject(error);
         })

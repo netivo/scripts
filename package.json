@@ -1,6 +1,6 @@
 {
   "name": "@netivo/scripts",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Scripts for compiling front end works",
   "bin": {
     "netivo-scripts": "cli/index.js"
@@ -47,6 +47,7 @@
     "sass": "^1.62.1",
     "source-map-loader": "^4.0.1",
     "stylelint": "^16.19.1",
-    "webpack": "^5.85.0"
+    "webpack": "^5.85.0",
+    "prettier": "^3.5.3"
   }
 }

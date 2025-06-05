@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.5.1
+- Added linter for js files
+
 ## Version 1.5.0
 - Added linter for scss files, as action and during develop
 
