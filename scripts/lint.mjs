@@ -6,15 +6,18 @@ import tsPlugin from "@typescript-eslint/eslint-plugin";
 import prettierPlugin from "eslint-plugin-prettier";
 import * as prettier from "prettier";
 
-const lintCss = () => {
+const lintCss = (file = null) => {
     return new Promise((resolve, reject) => {
        import("./../config/stylelintrc.json", {
            with: {
                type: "json",
            },
        }).then(res => {
+           if(file === null) {
+               file = path.resolve(process.cwd(), 'sources', '**/*.scss')
+           }
            stylelint.lint({
-               files: path.resolve(process.cwd(), 'sources', '**/*.scss'),
+               files: file,
                config: res.default,
                formatter: "verbose"
            }).then(result => {
@@ -22,19 +25,24 @@ const lintCss = () => {
            }).catch(error => {
                reject(error);
            })
+       }).catch(error => {
+           reject(error);
        });
     });
 }
 
-const lintCssFix = () => {
+const lintCssFix = (file = null) => {
     return new Promise((resolve, reject) => {
         import("./../config/stylelintrc.json", {
             with: {
                 type: "json",
             },
         }).then(res => {
+            if(file === null) {
+                file = path.resolve(process.cwd(), 'sources', '**/*.scss')
+            }
             stylelint.lint({
-                files: path.resolve(process.cwd(), 'sources', '**/*.scss'),
+                files: file,
                 config: res.default,
                 formatter: "verbose",
                 fix: true
@@ -43,11 +51,13 @@ const lintCssFix = () => {
             }).catch(error => {
                 reject(error);
             })
+        }).catch(error => {
+            reject(error);
         });
     });
 }
 
-const lintJs = () => {
+const lintJs = (file = null) => {
     return new Promise((resolve, reject) => {
         const config = {
             plugins: {
@@ -66,8 +76,10 @@ const lintJs = () => {
             overrideConfigFile: true,
             overrideConfig: config
         });
-
-        linter.lintFiles([path.resolve(process.cwd(), 'sources', '**/*.js')]).then(result => {
+        if(file === null) {
+            file = path.resolve(process.cwd(), 'sources', '**/*.js')
+        }
+        linter.lintFiles([file]).then(result => {
             linter.loadFormatter("stylish").then(res => {
                 let results = res.format(result);
                 resolve(results);
@@ -77,7 +89,7 @@ const lintJs = () => {
         })
     })
 }
-const lintJsFix = () => {
+const lintJsFix = (file = null) => {
     return new Promise((resolve, reject) => {
         const config = {
             plugins: {
@@ -97,13 +109,15 @@ const lintJsFix = () => {
             overrideConfig: config,
             fix: true
         });
-
-        linter.lintFiles([path.resolve(process.cwd(), 'sources', '**/*.js')]).then(result => {
-            linter.loadFormatter("stylish").then(res => {
-                let results = res.format(result);
-                ESLint.outputFixes(result).then(r => {
+        if(file === null) {
+            file = path.resolve(process.cwd(), 'sources', '**/*.js')
+        }
+        linter.lintFiles([file]).then(result => {
+            ESLint.outputFixes(result).then(r => {
+                linter.loadFormatter("stylish").then(res => {
+                    let results = res.format(result);
                     resolve(results);
-                })
+                });
             });
 
         }).catch(error => {
