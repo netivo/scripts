@@ -66,46 +66,56 @@ const developJs = (file = null) => {
         }
 }
 
+const developGutenberg = (file) => {
+  let type = helpers.getBlockFileType(file);
+  let blockName = helpers.getBlockNameFromFile(file);
+  if(type === 'block') {
+    gutenberg.developBlock(file).then(result => {
+      log.default.log(result.toString())
+    }).catch(error => {
+      log.default.log_error(error.toString());
+    });
+  } else if( type === 'block-style') {
+    log.default.log('Compiling block ' + blockName + ' editor style');
+    gutenberg.developBlockCss(file).then(result => {
+      log.default.log('Finished in ' + result + 's.');
+    }).catch(error => {
+      log.default.log_error(error.toString());
+    });
+  } else if( type === 'front-script') {
+    gutenberg.developBlockFrontScript(file).then(result => {
+      log.default.log(result.toString())
+    }).catch(error => {
+      log.default.log_error(error.toString());
+    });
+  } else if( type === 'front-style') {
+    log.default.log('Compiling block ' + blockName + ' view style');
+    gutenberg.developBlockFrontStyle(file).then(result => {
+      log.default.log('Finished in ' + result + 's.');
+    }).catch(error => {
+      log.default.log_error(error.toString());
+    });
+  } else if( type === 'php') {
+    gutenberg.movePhpFile(file);
+  } else if( type === 'json') {
+    gutenberg.prepareJsonFile(file);
+  }
+}
+
+const compileGutenberg = () => {
+  gutenberg.compileBlocks();
+}
+
+developCSS();
+developJs();
+compileGutenberg();
+
 log.default.log('Watchig scss ...');
 log.default.log('Watchig js ...');
 
 const watcher = watch([path.resolve(process.cwd(), 'sources', '**', '*.*').replace(/\\/g, '/')]);
 
-const developGutenberg = (file) => {
-        let type = helpers.getBlockFileType(file);
-        let blockName = helpers.getBlockNameFromFile(file);
-        if(type === 'block') {
-                gutenberg.developBlock(file).then(result => {
-                        log.default.log(result.toString())
-                }).catch(error => {
-                        log.default.log_error(error.toString());
-                });
-        } else if( type === 'block-style') {
-                log.default.log('Compiling block ' + blockName + ' editor style');
-                gutenberg.developBlockCss(file).then(result => {
-                        log.default.log('Finished in ' + result + 's.');
-                }).catch(error => {
-                        log.default.log_error(error.toString());
-                });
-        } else if( type === 'front-script') {
-                gutenberg.developBlockFrontScript(file).then(result => {
-                        log.default.log(result.toString())
-                }).catch(error => {
-                        log.default.log_error(error.toString());
-                });
-        } else if( type === 'front-style') {
-                log.default.log('Compiling block ' + blockName + ' view style');
-                gutenberg.developBlockFrontStyle(file).then(result => {
-                        log.default.log('Finished in ' + result + 's.');
-                }).catch(error => {
-                        log.default.log_error(error.toString());
-                });
-        } else if( type === 'php') {
-                gutenberg.movePhpFile(file);
-        } else if( type === 'json') {
-                gutenberg.prepareJsonFile(file);
-        }
-}
+
 
 const fileChange = (file, stat) => {
         log.default.log('Change detected: ' + file);
