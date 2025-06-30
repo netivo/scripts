@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.5.2
+- Added compilation when starting develop
+
 ## Version 1.5.1
 - Added linter for js files
 
