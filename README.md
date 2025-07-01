@@ -10,7 +10,7 @@ It allows you to process:
 ## Installation
 To install just run the command:
 
-```npm install @netivo\scripts```
+```npm install @netivo/scripts```
 
 ## How to use
 

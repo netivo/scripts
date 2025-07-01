@@ -1,5 +1,8 @@
 # Netivo Scripts Changelog
 
+## Version 1.5.3
+- Fixed build css/js/block to build specific types. 
+
 ## Version 1.5.2
 - Added compilation when starting develop
 

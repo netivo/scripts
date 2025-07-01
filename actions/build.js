@@ -43,12 +43,12 @@ const compileJs = () => {
 
 const [actionName, ...args] = process.argv.slice( 2 );
 
-if(actionName !== undefined && args.length > 0) {
+if(actionName !== undefined) {
         if(actionName === 'css') {
                 compileCSS();
         } else if(actionName === 'js') {
                 compileJs();
-        } else if(actionName === 'block') {
+        } else if(actionName === 'block' && args.length > 0) {
                 gutenberg.compileBlock(args[0]);
         } else {
                 compileCSS();
