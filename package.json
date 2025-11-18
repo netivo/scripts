@@ -40,7 +40,7 @@
     "eslint": "^9.28.0",
     "eslint-plugin-prettier": "^5.4.1",
     "fancy-log": "^2.0.0",
-    "glob": "^10.2.6",
+    "glob": "^11.1.0",
     "glob-watcher": "^6.0.0",
     "path": "^0.12.7",
     "plugin-error": "^2.0.1",
